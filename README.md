@@ -1,5 +1,5 @@
-# CenGcn
-An implementation of CenGcn based on tensorflow1.x.  
+# CenGCN
+An implementation of CenGCN based on tensorflow1.x.  
 Original paper: [Centralized Convolutional Networks with Unequal Information for Scale-Free Graphs]()
 
 ## Requirements
