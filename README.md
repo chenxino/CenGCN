@@ -1,4 +1,8 @@
-# Centralized Convolutional Networks with Unequal Information for Scale-Free Graphs
-An implementation of cengcn based on tensorflow1.x.
+# CenGcn
+An implementation of CenGcn based on tensorflow1.x.  
+Original paper: [Centralized Convolutional Networks with Unequal Information for Scale-Free Graphs]()
 
-Note: the code was written by Wang Lei and organized by chenxino.
+## Usage
+`pip install requirements.txt`  
+`python train.py`
+> Note: The code was written by [Lei Wang]() and collated by Xin Chen.

@@ -45,15 +45,6 @@ def load_data_new(dataset_str):
 
     return adj, features, y_train, y_val, y_test, train_mask, val_mask, test_mask
 
-
-def load_data_link(dataset_str):
-    dataset='data_link/'+dataset_str+'/'
-    adj=sp.csr_matrix(np.loadtxt(dataset+'adj_link.txt',dtype=np.float32))
-    features=sp.csr_matrix(np.loadtxt(dataset+'features.txt',dtype=np.float32))
-    negative_edges=np.loadtxt(dataset+'negative_edges.txt',dtype=np.int32)
-    positive_edges = np.loadtxt(dataset + 'positive_edges.txt',dtype=np.int32)
-    return adj,features,negative_edges,positive_edges
-
 def sparse_to_tuple(sparse_mx):
     """Convert sparse matrix to tuple representation."""
     def to_tuple(mx):
@@ -252,24 +243,3 @@ def construct_feed_dict_link(features, support,placeholders):
     feed_dict.update({placeholders['num_features_nonzero']: features[1].shape})
     return feed_dict
 
-def chebyshev_polynomials(adj, k):
-    """Calculate Chebyshev polynomials up to order k. Return a list of sparse matrices (tuple representation)."""
-    print("Calculating Chebyshev polynomials up to order {}...".format(k))
-
-    adj_normalized = normalize_adj(adj)
-    laplacian = sp.eye(adj.shape[0]) - adj_normalized
-    largest_eigval, _ = eigsh(laplacian, 1, which='LM')
-    scaled_laplacian = (2. / largest_eigval[0]) * laplacian - sp.eye(adj.shape[0])
-
-    t_k = list()
-    t_k.append(sp.eye(adj.shape[0]))
-    t_k.append(scaled_laplacian)
-
-    def chebyshev_recurrence(t_k_minus_one, t_k_minus_two, scaled_lap):
-        s_lap = sp.csr_matrix(scaled_lap, copy=True)
-        return 2 * s_lap.dot(t_k_minus_one) - t_k_minus_two
-
-    for i in range(2, k+1):
-        t_k.append(chebyshev_recurrence(t_k[-1], t_k[-2], scaled_laplacian))
-
-    return sparse_to_tuple(t_k)
