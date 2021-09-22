@@ -2,6 +2,9 @@
 An implementation of CenGcn based on tensorflow1.x.  
 Original paper: [Centralized Convolutional Networks with Unequal Information for Scale-Free Graphs]()
 
+## Requirements
+`* tensorflow 1.15`
+`* python 3.6`
 ## Usage
 `pip install requirements.txt`  
 `python train.py`
